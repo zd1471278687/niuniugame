@@ -4,23 +4,36 @@ export default class Main {
   constructor() {
     // 维护当前requestAnimationFrame的id
     this.aniId = 0
-    this.width =  canvas.width / 3
+    // 初始游戏数据
+    this.game = {
+      width: canvas.width / 3,
+      height: 200,
+      hammer: {
+        x: 10,
+        y: 50,
+        color: 'pink',
+        width: 20,
+        height: 50
+      }
+    }
+
     this.restart()
   }
 
   restart() {
-    const width = canvas.width / 3
     const obj = {
       x: 0,
       y: 100,
-      color: ''
+      color: '',
+      width: this.game.width,
+      height: this.game.height
     }
     let arr = []
     for (let i = 0; i < 9; i++) {
       let obj1 = JSON.parse(JSON.stringify(obj))
       let numX = (i % 3) === 0 ? 2 :( i % 3 - 1)
       let numY = parseInt(i / 3)
-      obj1.x = numX * this.width
+      obj1.x = numX * this.game.width
       obj1.y = (numY * 200) + 100
       obj1.color = '#' + i + i + i + i + i + i
       arr.push(obj1)
@@ -33,19 +46,23 @@ export default class Main {
       })
       this.drawRect(arr)
     // }, 16)
-    
+    this.drawRectItem(this.game.hammer)
   }
 
   clearRect (arr) {
     arr.forEach(i => {
-      context.clearRect(i.x, i.y, this.width, 200)
+      context.clearRect(i.x, i.y, i.width, i.height)
     })
+  }
+
+  drawRectItem (i) {
+    context.fillStyle = i.color // 矩形颜色
+    context.fillRect(i.x, i.y, i.width, i.height)
   }
 
   drawRect(arr) {
     arr.forEach(i => {
-      context.fillStyle = i.color // 矩形颜色
-      context.fillRect(i.x, i.y, this.width, 200)
+      this.drawRectItem(i)
     })
   }
 
