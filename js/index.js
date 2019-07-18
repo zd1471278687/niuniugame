@@ -1,4 +1,6 @@
 const context = canvas.getContext('2d') // 创建一个 2d context
+const screenWidth    = window.innerWidth
+const screenHeight   = window.innerHeight
 
 export default class Main {
   constructor() {
@@ -6,8 +8,8 @@ export default class Main {
     this.aniId = 0
     // 初始游戏数据
     this.game = {
-      width: canvas.width / 3,
-      height: 200,
+      width: screenWidth / 3,
+      height: screenHeight / 5,
       hammer: {
         x: 10,
         y: 50,
@@ -37,7 +39,7 @@ export default class Main {
       let numX = (i % 3) === 0 ? 2 :( i % 3 - 1)
       let numY = parseInt(i / 3)
       obj1.x = numX * this.game.width
-      obj1.y = (numY * 200) + 100
+      obj1.y = (numY * this.game.height) + 100
       obj1.color = '#' + i + i + i + i + i + i
       arr.push(obj1)
     }
